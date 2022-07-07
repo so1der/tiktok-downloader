@@ -3,7 +3,7 @@ import time
 import re
 import os
 
-from colorama import init
+from colorama import Fore, init
 import selenium
 import requests
 
@@ -19,6 +19,7 @@ from headers import headers
 
 PATH = 'TikTokVideos\\'
 TIME_OUT = 6
+
 
 def directoryCreator():
     try:
@@ -50,12 +51,12 @@ def downloadTikToks(urls, n=1):
     global_time = time.time()
     try:
         for url in urls:
-            print(f'\033[36m Downloading ({n}/{amount}): \033[39m')
+            print(f'{Fore.CYAN} Downloading ({n}/{amount}):')
             url = url.strip()
             print(url)
 
             if url.find('tiktok') == -1:
-                print('\033[31m ↑ was skipped, Incorrect TikTok URL\033[39m\n')
+                print(Fore.RED + ' ↑ was skipped, Incorrect TikTok URL\n')
                 n += 1
                 continue
 
@@ -67,7 +68,7 @@ def downloadTikToks(urls, n=1):
                 file_name = re.search('\d{19}', url).group(0)
 
             if os.path.isfile(f'{PATH}{file_name}.mp4'):
-                print('\033[35m ↑ was skipped, Already downloaded \033[39m\n')
+                print(Fore.MAGENTA + ' ↑ was skipped, Already downloaded\n')
                 n += 1
                 continue
             start_time = time.time()
@@ -78,7 +79,7 @@ def downloadTikToks(urls, n=1):
                 video_url = wait.until(EC.presence_of_element_located(
                                       (By.ID, f'xgwrapper-4-{video_id}')))
             except:
-                print("\033[31m ↑ was skipped, can't find video URL\033[39m\n")
+                print(Fore.RED + " ↑ was skipped, can't find video URL\n")
                 n += 1
                 continue
             wrapper = driver.find_element(By.ID, f'xgwrapper-4-{video_id}')
@@ -87,11 +88,11 @@ def downloadTikToks(urls, n=1):
             video = requests.get(video_link, headers=headers)
             with open(f'{PATH}{file_name}.mp4', 'wb') as f:
                 f.write(video.content)
-            print('\033[32m ↑ was downloaded successfully\033[39m')
+            print(Fore.GREEN + ' ↑ was downloaded successfully')
             print("--- %s seconds ---\n" % (time.time() - start_time))
             n += 1
     except Exception as e:
-        print(f"\033[31m Unexpected {e=}, {type(e)=}")
+        print(f"{Fore.RED} Unexpected {e=}, {type(e)=}")
         driver.close()
         input()
         exit()
@@ -99,8 +100,8 @@ def downloadTikToks(urls, n=1):
         driver.close()
         minutes = int((time.time() - global_time) // 60)
         seconds = int((time.time() - global_time) % 60)
-        print('\033[36m Total time spent:'
-              f'\033[39m {minutes} minutes and {seconds} seconds')
+        print(Fore.CYAN + ' Total time spent: '
+              f'{Fore.WHITE}{minutes} minutes and {seconds} seconds')
 
 
 def urlsListHandler():
@@ -118,7 +119,7 @@ def urlsListHandler():
     return urls
 
 if __name__ == '__main__':
-    init()
+    init(autoreset=True)
     directoryCreator()
     urls = urlsListHandler()
     downloadTikToks(urls)
