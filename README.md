@@ -2,8 +2,9 @@
 
 So, this is basic TikTok video downloader, that downloads video from TikTok by using Selenium and requests libraries. Main problem in this case, is that TikTok website just wont give You direct URL to video, if You send simple get requests, despite that fact that this URL is locate in HTML code of page. Maybe thats because some .js scripts is responsible for creating HTML block that contains direct URL to video. But I have tried to render those scripts with python requests-html library, tried to send cookies (include s_v_webid), but it didn't work. So then I decided - why not come easier way. After all, why not use Selenium just to get this URL. After obtaining this URL, videocan be simply downloaded with requests library. So that how this downloader works - its open Your URL, find there direct video URL, and send get request to this direct video to download it. 
 
-## Automated download
+## Main advantage
 The main advantage of this script is that it can download a bunch of TikToks, You just need to prepare .txt file, which contains links to videos.
+Another advantage of this script, is that it does not depend on third party APIs or websites, so they will not collect your personal data.
 
 <img alt="automated download" align="center" src="https://raw.githubusercontent.com/so1der/tiktok-downloader/main/images/automated_download.png">
 
