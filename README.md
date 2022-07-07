@@ -4,7 +4,7 @@ So, this is basic TikTok video downloader, that downloads video from TikTok by u
 
 ## Main advantage
 The main advantage of this script is that it can download a bunch of TikToks, You just need to prepare .txt file, which contains links to videos.
-Another advantage of this script, is that it does not depend on third party APIs or websites, so they will not collect your personal data.
+Another advantage of this script, is that it does not depend on third party APIs or websites, so they will not collect Your personal data.
 
 <img alt="automated download" align="center" src="https://raw.githubusercontent.com/so1der/tiktok-downloader/main/images/automated_download.png">
 
