@@ -33,6 +33,8 @@ As long as link contains video ID, like <i><b>'XNBEQj1RR'</b></i> from mobile or
 ## Browser
 Yes, for now its works only with Google Chrome. But You can easily adapt it for other browser. You need to change these lines in <i><b>main.py</i></b> to match Your browser's webdriver syntax:
 ```python
+from selenium.webdriver.chrome.options import Options
+
 chrome_options = Options()
 chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
 chrome_options.add_argument("--headless")
