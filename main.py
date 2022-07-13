@@ -22,13 +22,12 @@ TIME_OUT = 6
 
 
 def directoryCreator():
-    try:
-        os.mkdir(PATH)
-        print("TikTokVideos directory was created successfully, "
-              "videos will be downloaded in it\n")
-    except FileExistsError:
-        print("TikTokVideos directory already exists, "
-              "videos will be downloaded in it\n")
+    if os.path.exists(PATH):
+        return print(f"{PATH} directory already exists, "
+                      "videos will be downloaded in it\n")
+    os.mkdir(PATH)
+    print(f"{PATH} directory was created successfully, "
+           "videos will be downloaded in it\n")
 
 
 def downloadTikToks(urls, n=1):
