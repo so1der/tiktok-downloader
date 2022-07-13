@@ -31,7 +31,7 @@ If You dont have python installed, or if You dont want to install all of these r
 As long as link contains video ID, like <i><b>'XNBEQj1RR'</b></i> from mobile or <b><i>'7106587477489798446'</b></i> from desktop, downloader can handle this link. It is because downloader use those IDs for file name of downloaded video. Additional parameters like '?_t=8SzMvCvbGVR&_r=1' or like '&is_from_webapp=v1&item_id' in URL should not be a problem
 
 ## Browser
-Yes, for now its works only with Google Chrome. But You can easily adapt it for other browser. You need to change these lines in <i><b>main.py</i></b> to match Your browser's webdriver syntax:
+Yes, for now its works only with Google Chrome. But You can easily adapt it for other browser. You need to change these lines in file <i><b>main.py</i></b> to match Your browser's webdriver syntax:
 ```python
 from selenium.webdriver.chrome.options import Options
 
@@ -42,6 +42,8 @@ chrome_options.add_argument("--log-level=3")
 chrome_options.add_argument("--output=/dev/null")
 driver = webdriver.Chrome(options=chrome_options)
 ```
+All these code lines are located in driverInit() function.
+
 Due to prevalence of Google Chrome, I decided to make downloader work with it. But if dont use Chrome, and cant edit code, but still want to use this downloader - contact me, and I will help.
 
 ## Linux and video folder
