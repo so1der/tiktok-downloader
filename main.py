@@ -9,7 +9,6 @@ import requests
 
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium import webdriver
 
@@ -30,16 +29,38 @@ def directoryCreator():
            "videos will be downloaded in it\n")
 
 
-def downloadTikToks(urls, n=1):
-    amount = len(urls)
+def urlsListHandler():
+    prompt = input('Drop .txt file here or insert links, and press Enter:\n')
+    while True:
+        try:
+            if prompt.startswith('https://'):
+                urls = prompt.split(' ')
+                break
+            with open(prompt, 'r') as f:
+                urls = f.readlines()
+            break
+        except FileNotFoundError:
+            prompt = input('Incorrect file or link. Try again:\n')
+    return urls
+
+
+def driverInit():
+    from selenium.webdriver.chrome.options import Options
+
     chrome_options = Options()
     chrome_options.add_experimental_option('excludeSwitches',
                                            ['enable-logging'])
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--log-level=3")
     chrome_options.add_argument("--output=/dev/null")
+    return webdriver.Chrome(options=chrome_options)
+
+
+def downloadTikToks(urls, n=1):
+    amount = len(urls)
+
     try:
-        driver = webdriver.Chrome(options=chrome_options)
+        driver = driverInit()
     except selenium.common.exceptions.SessionNotCreatedException:
         input("Session not created. Check version of your webdriver/browser\n")
         exit()
@@ -101,21 +122,6 @@ def downloadTikToks(urls, n=1):
         seconds = int((time.time() - global_time) % 60)
         print(Fore.CYAN + ' Total time spent: '
               f'{Fore.WHITE}{minutes} minutes and {seconds} seconds')
-
-
-def urlsListHandler():
-    prompt = input('Drop .txt file here or insert links, and press Enter:\n')
-    while True:
-        try:
-            if prompt.startswith('https://'):
-                urls = prompt.split(' ')
-                break
-            with open(prompt, 'r') as f:
-                urls = f.readlines()
-            break
-        except FileNotFoundError:
-            prompt = input('Incorrect file or link. Try again:\n')
-    return urls
 
 if __name__ == '__main__':
     init(autoreset=True)
