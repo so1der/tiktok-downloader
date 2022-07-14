@@ -2,6 +2,7 @@ import os.path
 import time
 import re
 import os
+import configparser
 
 from colorama import Fore, init
 import selenium
@@ -15,9 +16,11 @@ from selenium import webdriver
 from done import grandFinale
 from headers import headers
 
-
-PATH = 'TikTokVideos\\'
-TIME_OUT = 6
+# Reading constants form .ini file
+config = configparser.ConfigParser()
+config.read('config.ini')
+PATH = config.get('CONFIG', 'PATH', fallback='TikTokVideos\\')
+TIME_OUT = int(config.get('CONFIG', 'TIME_OUT', fallback=6))
 
 
 def directoryCreator():
@@ -56,9 +59,17 @@ def driverInit():
     return webdriver.Chrome(options=chrome_options)
 
 
+def fileNameHandler(url):
+    url_type_checker = url.split('https://')
+    if url_type_checker[1].startswith('vm'):
+        file_name = (url.split("/"))[3]
+    else:
+        file_name = re.search('\d{19}', url).group(0)
+    return file_name
+
+
 def downloadTikToks(urls, n=1):
     amount = len(urls)
-
     try:
         driver = driverInit()
     except selenium.common.exceptions.SessionNotCreatedException:
@@ -67,7 +78,6 @@ def downloadTikToks(urls, n=1):
     except selenium.common.exceptions.WebDriverException:
         input("Webdriver not found in current directory.\n")
         exit()
-
     global_time = time.time()
     try:
         for url in urls:
@@ -79,14 +89,7 @@ def downloadTikToks(urls, n=1):
                 print(Fore.RED + ' ↑ was skipped, Incorrect TikTok URL\n')
                 n += 1
                 continue
-
-            url_type_checker = url.split('https://')
-
-            if url_type_checker[1].startswith('vm'):
-                file_name = (url.split("/"))[3]
-            else:
-                file_name = re.search('\d{19}', url).group(0)
-
+            file_name = fileNameHandler(url)
             if os.path.isfile(f'{PATH}{file_name}.mp4'):
                 print(Fore.MAGENTA + ' ↑ was skipped, Already downloaded\n')
                 n += 1
