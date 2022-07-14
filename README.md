@@ -47,13 +47,13 @@ All these code lines are located in driverInit() function.
 Due to prevalence of Google Chrome, I decided to make downloader work with it. But if dont use Chrome, and cant edit code, but still want to use this downloader - contact me, and I will help.
 
 ## Linux and video folder
-I dont test this downloader on Linux, but I have a guess that You need to change variable PATH, so downloader can work properly on Linux.
+I dont test this downloader on Linux, but I have a guess that You need to change 'PATH' in <b><i>config.ini</b></i> file, so downloader can work properly on Linux.
 
-```python
+```ini
 PATH = 'TikTokVideos\\'
 ```
 As You can see, this variable contains path to folder in which videos will be downloaded. I suggest that in Linux this variable should be like this:
-```python
+```ini
 PATH = 'TikTokVideos/'
 ```
 You can also change the folder name to Your liking.
@@ -66,8 +66,8 @@ Personally, I don't use tiktok, so thats why I wouldn't be able to fully test th
 ## Possible problems
 - <i><b>Downloader output " ↑ was skipped, can't find video URL" error to all links</b></i>
 
-This may be due to poor internet connection. The work of the downloader is arranged in such a way that it is waiting till certain "xgwrapper-4" block will appear. This block contains direct video URL, so if the block did not appear, the link may have led to the "Video currently unavailable" page. But if video is aviable, and downloader still output this error, You can increase "waiting" time, by changing TIME_OUT variable
-```python
+This may be due to poor internet connection. The work of the downloader is arranged in such a way that it is waiting till certain "xgwrapper-4" block will appear. This block contains direct video URL, so if the block did not appear, the link may have led to the "Video currently unavailable" page. But if video is aviable, and downloader still output this error, You can increase "waiting" time, by changing TIME_OUT in <b><i>config.ini</b></i>
+```ini
 TIME_OUT = 10
 # this will make downloader 'waiting' time equal to ten seconds
 ```
