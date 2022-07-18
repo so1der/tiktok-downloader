@@ -35,10 +35,10 @@ def directoryCreator():
 def urlsListHandler():
     prompt = input('Drop .txt file here or insert links, and press Enter:\n')
     while True:
+        if prompt.startswith('https://'):
+            urls = prompt.split(' ')
+            break
         try:
-            if prompt.startswith('https://'):
-                urls = prompt.split(' ')
-                break
             with open(prompt, 'r') as f:
                 urls = f.readlines()
             break
@@ -54,18 +54,7 @@ def driverInit():
     chrome_options.add_experimental_option('excludeSwitches',
                                            ['enable-logging'])
     chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--log-level=3")
-    chrome_options.add_argument("--output=/dev/null")
     return webdriver.Chrome(options=chrome_options)
-
-
-def fileNameHandler(url):
-    url_type_checker = url.split('https://')
-    if url_type_checker[1].startswith('vm'):
-        file_name = (url.split("/"))[3]
-    else:
-        file_name = re.search('\d{19}', url).group(0)
-    return file_name
 
 
 def downloadTikToks(urls, n=1):
@@ -84,23 +73,21 @@ def downloadTikToks(urls, n=1):
             print(f'{Fore.CYAN} Downloading ({n}/{amount}):')
             url = url.strip()
             print(url)
-
             if url.find('tiktok') == -1:
                 print(Fore.RED + ' ↑ was skipped, Incorrect TikTok URL\n')
-                n += 1
-                continue
-            file_name = fileNameHandler(url)
-            if os.path.isfile(f'{PATH}{file_name}.mp4'):
-                print(Fore.MAGENTA + ' ↑ was skipped, Already downloaded\n')
                 n += 1
                 continue
             start_time = time.time()
             driver.get(url)
             wait = WebDriverWait(driver, TIME_OUT)
             video_id = re.search('\d{19}', driver.current_url).group(0)
+            if os.path.isfile(f'{PATH}{video_id}.mp4'):
+                print(Fore.MAGENTA + ' ↑ was skipped, Already downloaded\n')
+                n += 1
+                continue
             try:
-                video_url = wait.until(EC.presence_of_element_located(
-                                      (By.ID, f'xgwrapper-4-{video_id}')))
+                wait.until(EC.presence_of_element_located(
+                          (By.ID, f'xgwrapper-4-{video_id}')))
             except:
                 print(Fore.RED + " ↑ was skipped, can't find video URL\n")
                 n += 1
@@ -109,16 +96,13 @@ def downloadTikToks(urls, n=1):
             video_tag = wrapper.find_element(By.TAG_NAME, "video")
             video_link = video_tag.get_attribute('src')
             video = requests.get(video_link, headers=headers)
-            with open(f'{PATH}{file_name}.mp4', 'wb') as f:
+            with open(f'{PATH}{video_id}.mp4', 'wb') as f:
                 f.write(video.content)
             print(Fore.GREEN + ' ↑ was downloaded successfully')
-            print("--- %s seconds ---\n" % (time.time() - start_time))
+            print(f"--- {time.time() - start_time} seconds ---\n")
             n += 1
     except Exception as e:
         print(f"{Fore.RED} Unexpected {e=}, {type(e)=}")
-        driver.close()
-        input()
-        exit()
     finally:
         driver.close()
         minutes = int((time.time() - global_time) // 60)
