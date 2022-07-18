@@ -4,7 +4,8 @@ So, this is basic TikTok video downloader, that downloads video from TikTok by u
 
 ## Main advantage
 The main advantage of this script is that it can download a bunch of TikToks, You just need to prepare .txt file, which contains links to videos.
-Another advantage of this script, is that it does not depend on third party APIs or websites, so they will not collect Your personal data (or if they not, You at least still not depend on third party APIs).
+
+Another advantage of this script, is that it does not depend on third party APIs or websites.
 
 <img alt="automated download" align="center" src="https://raw.githubusercontent.com/so1der/tiktok-downloader/main/images/automated_download.png">
 
@@ -28,7 +29,12 @@ python main.py
 If You dont have python installed, or if You dont want to install all of these requirements, You can just download .exe file at Releases. Unfortunately in this case You still need to download chromedriver. However, I have put chromedriver, that works with 103.0.5060.114 version of Chrome in archive.
 
 ## Supported link types
-As long as link contains video ID, like <i><b>'XNBEQj1RR'</b></i> from mobile or <b><i>'7106587477489798446'</b></i> from desktop, downloader can handle this link. It is because downloader use those IDs for file name of downloaded video. Additional parameters like '?_t=8SzMvCvbGVR&_r=1' or like '&is_from_webapp=v1&item_id' in URL should not be a problem
+It supports all types of TikTok links
+
+## Input format
+Links in .txt file must be divided by newline.
+
+If you just inserting links in console window, you must divide them by Spacebar.
 
 ## Browser
 Yes, for now its works only with Google Chrome. But You can easily adapt it for other browser. You need to change these lines in file <i><b>main.py</i></b> to match Your browser's webdriver syntax:
@@ -38,8 +44,6 @@ from selenium.webdriver.chrome.options import Options
 chrome_options = Options()
 chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
 chrome_options.add_argument("--headless")
-chrome_options.add_argument("--log-level=3")
-chrome_options.add_argument("--output=/dev/null")
 driver = webdriver.Chrome(options=chrome_options)
 ```
 All these code lines are located in driverInit() function.
