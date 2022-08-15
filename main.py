@@ -57,6 +57,14 @@ def driverInit():
     return webdriver.Chrome(options=chrome_options)
 
 
+def undownloadedLinksLogFile(links):
+    cur_time = time.asctime(time.localtime())
+    with open('undownoaded_log.txt', 'a') as f:
+        f.write(f"\nSession ({cur_time}) wasn't able to donwload links:")
+        for link in links:
+            f.write(f'\n{link}')
+
+
 def downloadTikToks(urls, n=1):
     amount = len(urls)
     try:
@@ -68,8 +76,9 @@ def downloadTikToks(urls, n=1):
         input("Webdriver not found in current directory.\n")
         exit()
     global_time = time.time()
-    try:
-        for url in urls:
+    undownloaded_links = []
+    for url in urls:
+        try:
             print(f'{Fore.CYAN} Downloading ({n}/{amount}):')
             url = url.strip()
             print(url)
@@ -90,6 +99,7 @@ def downloadTikToks(urls, n=1):
                           (By.ID, f'xgwrapper-4-{video_id}')))
             except:
                 print(Fore.RED + " ↑ was skipped, can't find video URL\n")
+                undownloaded_links.append(url)
                 n += 1
                 continue
             wrapper = driver.find_element(By.ID, f'xgwrapper-4-{video_id}')
@@ -101,14 +111,15 @@ def downloadTikToks(urls, n=1):
             print(Fore.GREEN + ' ↑ was downloaded successfully')
             print(f"--- {time.time() - start_time} seconds ---\n")
             n += 1
-    except Exception as e:
-        print(f"{Fore.RED} Unexpected {e=}, {type(e)=}")
-    finally:
-        driver.close()
-        minutes = int((time.time() - global_time) // 60)
-        seconds = int((time.time() - global_time) % 60)
-        print(Fore.CYAN + ' Total time spent: '
-              f'{Fore.WHITE}{minutes} minutes and {seconds} seconds')
+        except Exception as e:
+            print(f"{Fore.RED} Unexpected {e=}, {type(e)=}")
+            undownloaded_links.append(url)
+    driver.close()
+    undownloadedLinksLogFile(undownloaded_links)
+    minutes = int((time.time() - global_time) // 60)
+    seconds = int((time.time() - global_time) % 60)
+    print(Fore.CYAN + ' Total time spent: '
+          f'{Fore.WHITE}{minutes} minutes and {seconds} seconds')
 
 if __name__ == '__main__':
     init(autoreset=True)
