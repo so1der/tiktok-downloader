@@ -105,6 +105,14 @@ tiktok_downloader.exe
 ```
 Or just drop .py/.exe file into console window. Even if it crush, it wont close cmd, this will allow You to see the error so You can fix it, or contact me.
 
+# Changelog:
+- 0.4:
+Added debug mode.
+Fixed problem when counter doesnt update in exception
+
+- 0.3:
+Reworked try-except block, so downloader wont break after exctept
+
 # Conclusion
 
 Despite that fact, that downloader already usable, it is still in the early stage of development. Thats why I will be very grateful for Your feedback. Together we can improve this downloader!
