@@ -1,3 +1,4 @@
+from distutils.debug import DEBUG
 import os.path
 import time
 import re
@@ -21,6 +22,7 @@ config = configparser.ConfigParser()
 config.read('config.ini')
 PATH = config.get('CONFIG', 'PATH', fallback='TikTokVideos\\')
 TIME_OUT = int(config.get('CONFIG', 'TIME_OUT', fallback=6))
+DEBUG_MODE = config.get('CONFIG', 'DEBUG_MODE', fallback='False')
 
 
 def directoryCreator():
@@ -58,11 +60,10 @@ def driverInit():
 
 
 def undownloadedLinksLogFile(links):
-    cur_time = time.asctime(time.localtime())
-    with open('undownoaded_log.txt', 'a') as f:
-        f.write(f"\nSession ({cur_time}) wasn't able to donwload links:")
+    date = (time.asctime(time.localtime())).replace(' ', '_').replace(':', '_')
+    with open(f'undownoaded {date}.txt', 'a') as f:
         for link in links:
-            f.write(f'\n{link}')
+            f.write(f'{link}\n')
 
 
 def downloadTikToks(urls, n=1):
@@ -112,8 +113,12 @@ def downloadTikToks(urls, n=1):
             print(f"--- {time.time() - start_time} seconds ---\n")
             n += 1
         except Exception as e:
-            print(f"{Fore.RED} Unexpected {e=}, {type(e)=}")
+            if DEBUG_MODE == 'True':
+                print(f"{Fore.RED} Unexpected {e}, {type(e)}")
+            else:
+                print(f'{Fore.RED} ↑ was skipped, error {e.args[0]}\n')
             undownloaded_links.append(url)
+            n += 1
     driver.close()
     undownloadedLinksLogFile(undownloaded_links)
     minutes = int((time.time() - global_time) // 60)
