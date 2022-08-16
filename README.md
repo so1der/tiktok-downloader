@@ -113,6 +113,9 @@ Fixed problem when counter doesnt update in exception
 - 0.3:
 Reworked try-except block, so downloader wont break after exctept
 
+- 0.2:
+Reworked file-naming. Added .ini config file 
+
 # Conclusion
 
 Despite that fact, that downloader already usable, it is still in the early stage of development. Thats why I will be very grateful for Your feedback. Together we can improve this downloader!
