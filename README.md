@@ -108,10 +108,8 @@ Or just drop .py/.exe file into console window. Even if it crush, it wont close 
 # Changelog:
 - **0.4:**
 
-Added debug mode.
-
-Fixed problem when counter doesnt update in exception
-
+Added debug mode.<br>
+Fixed problem when counter doesnt update in exception<br>
 Links that could not download video now stored in 'undownloaded{session_date}.txt' file
 
 - **0.3:**
@@ -120,8 +118,7 @@ Reworked try-except block, so downloader wont break after exctept
 
 - **0.2:**
 
-Reworked file-naming.
-
+Reworked file-naming.<br>
 Added .ini config file 
 
 # Conclusion
