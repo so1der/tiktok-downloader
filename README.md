@@ -106,16 +106,23 @@ tiktok_downloader.exe
 Or just drop .py/.exe file into console window. Even if it crush, it wont close cmd, this will allow You to see the error so You can fix it, or contact me.
 
 # Changelog:
-- 0.4:
-Added debug mode.
-Fixed problem when counter doesnt update in exception
-Links that could not download video now stored in 'undeowloaded{session_date}.txt' file
+- **0.4:**
 
-- 0.3:
+Added debug mode.
+
+Fixed problem when counter doesnt update in exception
+
+Links that could not download video now stored in 'undownloaded{session_date}.txt' file
+
+- **0.3:**
+
 Reworked try-except block, so downloader wont break after exctept
 
-- 0.2:
-Reworked file-naming. Added .ini config file 
+- **0.2:**
+
+Reworked file-naming.
+
+Added .ini config file 
 
 # Conclusion
 
