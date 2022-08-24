@@ -3,8 +3,7 @@
 So, this is basic TikTok video downloader, that downloads video from TikTok by using Selenium and requests libraries. Main problem in this case, is that TikTok website just wont give You direct URL to video, if You send simple get requests, despite that fact that this URL is locate in HTML code of page. Maybe thats because some .js scripts is responsible for creating HTML block that contains direct URL to video. But I have tried to render those scripts with python requests-html library, tried to send cookies (include s_v_webid), but it didn't work. So then I decided - why not come easier way. After all, why not use Selenium just to get this URL. After obtaining this URL, videocan be simply downloaded with requests library. So that how this downloader works - its open Your URL, find there direct video URL, and send get request to this direct video to download it. 
 
 ## Main advantage
-The main advantage of this script is that it can download a bunch of TikToks, You just need to prepare .txt file, which contains links to videos.
-
+The main advantage of this script is that it can download a bunch of TikToks, You just need to prepare .txt file, which contains links to videos.<br>
 Another advantage of this script, is that it does not depend on third party APIs or websites.
 
 <img alt="automated download" align="center" src="https://raw.githubusercontent.com/so1der/tiktok-downloader/main/images/automated_download.png">
@@ -37,7 +36,7 @@ Links in .txt file must be divided by newline.
 If you just inserting links in console window, you must divide them by Spacebar.
 
 ## Browser
-Yes, for now its works only with Google Chrome. But You can easily adapt it for other browser. You need to change these lines in file <i><b>main.py</i></b> to match Your browser's webdriver syntax:
+Yes, for now its works only with Google Chrome. But You can easily adapt it for other browser. You need to change these lines in method <i><b>init_dirver</i></b> to match Your browser's webdriver syntax:
 ```python
 from selenium.webdriver.chrome.options import Options
 
@@ -46,7 +45,6 @@ chrome_options.add_experimental_option('excludeSwitches', ['enable-logging'])
 chrome_options.add_argument("--headless")
 driver = webdriver.Chrome(options=chrome_options)
 ```
-All these code lines are located in driverInit() function.
 
 Due to prevalence of Google Chrome, I decided to make downloader work with it. But if dont use Chrome, and cant edit code, but still want to use this downloader - contact me, and I will help.
 
@@ -106,6 +104,10 @@ tiktok_downloader.exe
 Or just drop .py/.exe file into console window. Even if it crush, it wont close cmd, this will allow You to see the error so You can fix it, or contact me.
 
 # Changelog:
+- **0.5:**
+
+Code refactoring, now downloader is uses OOP.
+
 - **0.4:**
 
 Added debug mode.<br>
