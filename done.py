@@ -1,6 +1,6 @@
 #from colorama inport init
 
-def grandFinale():
+def grand_finale():
     print("""\033[2m \033[32m
 DDDDDDDDDDDDD             OOOOOOOOO     NNNNNNNN        NNNNNNNNEEEEEEEEEEEEEEEEEEEEEE !!!
 D::::::::::::DDD        OO:::::::::OO   N:::::::N       N::::::NE::::::::::::::::::::E!!:!!
