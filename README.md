@@ -1,5 +1,6 @@
+<h1>Attention</h1>
+<b>This downloader no longer works, because TikTok removed possibility of downloading videos by direct link in HTML code, this link now leads you to the "Access denied" page.</b>
 <h1>TikTok Video Downloader</h1>
-
 So, this is basic TikTok video downloader, that downloads video from TikTok by using Selenium and requests libraries. Main problem in this case, is that TikTok website just wont give You direct URL to video, if You send simple get requests, despite that fact that this URL is locate in HTML code of page. Maybe thats because some .js scripts is responsible for creating HTML block that contains direct URL to video. But I have tried to render those scripts with python requests-html library, tried to send cookies (include s_v_webid), but it didn't work. So then I decided - why not come easier way. After all, why not use Selenium just to get this URL. After obtaining this URL, videocan be simply downloaded with requests library. So that how this downloader works - its open Your URL, find there direct video URL, and send get request to this direct video to download it. 
 
 ## Main advantage
